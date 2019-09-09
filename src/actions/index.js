@@ -1,20 +1,28 @@
-import {BOOKS_LOADED, BOOKS_REQUESTED, BOOKS_ERROR} from "../constants";
+import {FETCH_BOOKS_REQUEST, FETCH_BOOKS_SUCCESS, FETCH_BOOKS_FAILURE} from "../constants";
 
 export const booksLoaded = (newBooks) => {
     return {
-        type: BOOKS_LOADED,
+        type: FETCH_BOOKS_REQUEST,
         payload: newBooks
     }
 }
 
 export const booksRequested = () => {
     return {
-        type: BOOKS_REQUESTED
+        type: FETCH_BOOKS_SUCCESS
     }
 }
 
-export const booksError = () => {
+export const booksError = (error) => {
     return {
-        type: BOOKS_ERROR
+        type: FETCH_BOOKS_FAILURE,
+        payload: error
     }
+}
+
+export const fetchBooks = (bookstoreService, dispatch) => () => {
+    dispatch(booksRequested());
+    bookstoreService.getBooks()
+        .then(result => dispatch(booksLoaded(result)))
+        .catch(error => dispatch(booksError(error)))
 }

@@ -20,6 +20,7 @@ export default class BookstoreService {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(this.data)
+                // reject(new Error('Something wrong happened. It is bad.'))
             }, 700)
         })
     }

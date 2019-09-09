@@ -1,28 +1,37 @@
-import { BOOKS_LOADED , BOOKS_REQUESTED, BOOKS_ERROR} from "../constants";
+import { FETCH_BOOKS_REQUEST , FETCH_BOOKS_SUCCESS, FETCH_BOOKS_FAILURE} from "../constants";
 
 const initialState = {
     books: [],
-    loading: true
+    loading: true,
+    error: null,
+    cartItems: [],
+    orderTotal: 0
 }
 
 export const reducer = (state=initialState, action) => {
 
     switch (action.type) {
-        case BOOKS_REQUESTED:
+        case FETCH_BOOKS_SUCCESS:
             return {
+                ...state,
                 books: [],
-                loading: true
+                loading: true,
+                error: null
             }
-        case BOOKS_LOADED:
+        case FETCH_BOOKS_REQUEST:
             return  {
+                ...state,
                 books: action.payload,
-                loading: false
+                loading: false,
+                error: null
             }
 
-        case BOOKS_ERROR:
+        case FETCH_BOOKS_FAILURE:
             return {
+                ...state,
                 books: [],
-                loading: false
+                loading: false,
+                error: action.payload
             }
         default: return state
     }
